@@ -1,0 +1,23 @@
+name: Run Newman Tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  run-api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install Newman
+        run: npm install -g newman
+      - name: Run Postman collection with Newman
+        run: |
+          newman run "API_Automation_Project.postman_collection.json" \
+            -e "API_Automation_Project.postman_environment.json" \
+            --reporters cli

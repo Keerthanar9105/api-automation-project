@@ -1,0 +1,918 @@
+{
+	"info": {
+		"_postman_id": "a751689c-6667-4040-b7cc-257cc1d7562a",
+		"name": "API Automation Project",
+		"description": "This project demonstrates a complete **API Automation Framework in Postman**, covering:\n\n- 🔐 Bearer Token Authentication (dummy simulation)\n    \n- 🔄 Full CRUD Operations (Create, Read, Update, Delete)\n    \n- 🧩 Data Chaining between requests\n    \n- 🧠 Advanced Test Assertions (status, schema, content)\n    \n- 🧰 Data-driven execution (via CSV)\n    \n- ⚙️ CI/CD Integration (Newman + GitHub Actions)\n    \n\nThe collection is designed for **learning and showcasing real-world API automation practices** while using a **mock REST API** (`https://jsonplaceholder.typicode.com`).\n\n## Technical Specifications\n\n| Component | Tool / Library |\n| --- | --- |\n| API Tool | Postman |\n| Command-line Runner | Newman |\n| CI/CD | GitHub Actions |\n| Mock API | JSONPlaceholder |\n| Language | JavaScript (Postman test scripts) |\n\n## Test Coverage Summary\n\n| Category | Assertions Used |\n| --- | --- |\n| Status Codes | pm.response.to.have.status(200/201) |\n| Schema Validation | pm.response.to.have.jsonSchema(schema) |\n| Header Validation | pm.response.headers.get('Content-Type') |\n| Field Existence | pm.expect(response).to.have.property('title') |\n| Dynamic Data | pm.environment.set(\"postId\", ...) |\n\nThese validations ensure the correctness, structure, and integrity of API responses throughout the workflow.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32984933"
+	},
+	"item": [
+		{
+			"name": "Auth - Bearer Token (Dummy)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "## Purpose\n\nSimulates token-based authentication setup.  \nNo real authentication is performed — this request simply demonstrates the use of a Bearer token in headers.\n\n## Method\n\nGET {{baseUrl}}/users\n\n## Headers\n\n- Authorization: Bearer {{token}}\n    \n\n## Expected Response\n\nStatus: 200 OK  \nReturns a list of users (mock data).\n\n## Notes\n\n- No test script because this is a dummy authentication request.\n    \n- Demonstrates how Authorization headers are passed to protected endpoints."
+			},
+			"response": [
+				{
+					"name": "Auth - Bearer Token (Dummy)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 10 Nov 2025 11:17:21 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1847"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=43200"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"160d-1eMSsxeJRfnVLRBmYJSbCiJZ1qQ\""
+						},
+						{
+							"key": "expires",
+							"value": "-1"
+						},
+						{
+							"key": "nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+						},
+						{
+							"key": "pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "report-to",
+							"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=Z7L9EYPymAdgejdtZ9XlKGkq2a3e1fOkiXxcjUNfbO0%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1762424290\"}],\"max_age\":3600}"
+						},
+						{
+							"key": "reporting-endpoints",
+							"value": "heroku-nel=\"https://nel.heroku.com/reports?s=Z7L9EYPymAdgejdtZ9XlKGkq2a3e1fOkiXxcjUNfbO0%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1762424290\""
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "via",
+							"value": "2.0 heroku-router"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "x-ratelimit-limit",
+							"value": "1000"
+						},
+						{
+							"key": "x-ratelimit-remaining",
+							"value": "999"
+						},
+						{
+							"key": "x-ratelimit-reset",
+							"value": "1762424305"
+						},
+						{
+							"key": "Age",
+							"value": "10345"
+						},
+						{
+							"key": "cf-cache-status",
+							"value": "HIT"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "99c524995ebcfe13-SIN"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\"; ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Leanne Graham\",\n        \"username\": \"Bret\",\n        \"email\": \"Sincere@april.biz\",\n        \"address\": {\n            \"street\": \"Kulas Light\",\n            \"suite\": \"Apt. 556\",\n            \"city\": \"Gwenborough\",\n            \"zipcode\": \"92998-3874\",\n            \"geo\": {\n                \"lat\": \"-37.3159\",\n                \"lng\": \"81.1496\"\n            }\n        },\n        \"phone\": \"1-770-736-8031 x56442\",\n        \"website\": \"hildegard.org\",\n        \"company\": {\n            \"name\": \"Romaguera-Crona\",\n            \"catchPhrase\": \"Multi-layered client-server neural-net\",\n            \"bs\": \"harness real-time e-markets\"\n        }\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Ervin Howell\",\n        \"username\": \"Antonette\",\n        \"email\": \"Shanna@melissa.tv\",\n        \"address\": {\n            \"street\": \"Victor Plains\",\n            \"suite\": \"Suite 879\",\n            \"city\": \"Wisokyburgh\",\n            \"zipcode\": \"90566-7771\",\n            \"geo\": {\n                \"lat\": \"-43.9509\",\n                \"lng\": \"-34.4618\"\n            }\n        },\n        \"phone\": \"010-692-6593 x09125\",\n        \"website\": \"anastasia.net\",\n        \"company\": {\n            \"name\": \"Deckow-Crist\",\n            \"catchPhrase\": \"Proactive didactic contingency\",\n            \"bs\": \"synergize scalable supply-chains\"\n        }\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Clementine Bauch\",\n        \"username\": \"Samantha\",\n        \"email\": \"Nathan@yesenia.net\",\n        \"address\": {\n            \"street\": \"Douglas Extension\",\n            \"suite\": \"Suite 847\",\n            \"city\": \"McKenziehaven\",\n            \"zipcode\": \"59590-4157\",\n            \"geo\": {\n                \"lat\": \"-68.6102\",\n                \"lng\": \"-47.0653\"\n            }\n        },\n        \"phone\": \"1-463-123-4447\",\n        \"website\": \"ramiro.info\",\n        \"company\": {\n            \"name\": \"Romaguera-Jacobson\",\n            \"catchPhrase\": \"Face to face bifurcated interface\",\n            \"bs\": \"e-enable strategic applications\"\n        }\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Patricia Lebsack\",\n        \"username\": \"Karianne\",\n        \"email\": \"Julianne.OConner@kory.org\",\n        \"address\": {\n            \"street\": \"Hoeger Mall\",\n            \"suite\": \"Apt. 692\",\n            \"city\": \"South Elvis\",\n            \"zipcode\": \"53919-4257\",\n            \"geo\": {\n                \"lat\": \"29.4572\",\n                \"lng\": \"-164.2990\"\n            }\n        },\n        \"phone\": \"493-170-9623 x156\",\n        \"website\": \"kale.biz\",\n        \"company\": {\n            \"name\": \"Robel-Corkery\",\n            \"catchPhrase\": \"Multi-tiered zero tolerance productivity\",\n            \"bs\": \"transition cutting-edge web services\"\n        }\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Chelsey Dietrich\",\n        \"username\": \"Kamren\",\n        \"email\": \"Lucio_Hettinger@annie.ca\",\n        \"address\": {\n            \"street\": \"Skiles Walks\",\n            \"suite\": \"Suite 351\",\n            \"city\": \"Roscoeview\",\n            \"zipcode\": \"33263\",\n            \"geo\": {\n                \"lat\": \"-31.8129\",\n                \"lng\": \"62.5342\"\n            }\n        },\n        \"phone\": \"(254)954-1289\",\n        \"website\": \"demarco.info\",\n        \"company\": {\n            \"name\": \"Keebler LLC\",\n            \"catchPhrase\": \"User-centric fault-tolerant solution\",\n            \"bs\": \"revolutionize end-to-end systems\"\n        }\n    },\n    {\n        \"id\": 6,\n        \"name\": \"Mrs. Dennis Schulist\",\n        \"username\": \"Leopoldo_Corkery\",\n        \"email\": \"Karley_Dach@jasper.info\",\n        \"address\": {\n            \"street\": \"Norberto Crossing\",\n            \"suite\": \"Apt. 950\",\n            \"city\": \"South Christy\",\n            \"zipcode\": \"23505-1337\",\n            \"geo\": {\n                \"lat\": \"-71.4197\",\n                \"lng\": \"71.7478\"\n            }\n        },\n        \"phone\": \"1-477-935-8478 x6430\",\n        \"website\": \"ola.org\",\n        \"company\": {\n            \"name\": \"Considine-Lockman\",\n            \"catchPhrase\": \"Synchronised bottom-line interface\",\n            \"bs\": \"e-enable innovative applications\"\n        }\n    },\n    {\n        \"id\": 7,\n        \"name\": \"Kurtis Weissnat\",\n        \"username\": \"Elwyn.Skiles\",\n        \"email\": \"Telly.Hoeger@billy.biz\",\n        \"address\": {\n            \"street\": \"Rex Trail\",\n            \"suite\": \"Suite 280\",\n            \"city\": \"Howemouth\",\n            \"zipcode\": \"58804-1099\",\n            \"geo\": {\n                \"lat\": \"24.8918\",\n                \"lng\": \"21.8984\"\n            }\n        },\n        \"phone\": \"210.067.6132\",\n        \"website\": \"elvis.io\",\n        \"company\": {\n            \"name\": \"Johns Group\",\n            \"catchPhrase\": \"Configurable multimedia task-force\",\n            \"bs\": \"generate enterprise e-tailers\"\n        }\n    },\n    {\n        \"id\": 8,\n        \"name\": \"Nicholas Runolfsdottir V\",\n        \"username\": \"Maxime_Nienow\",\n        \"email\": \"Sherwood@rosamond.me\",\n        \"address\": {\n            \"street\": \"Ellsworth Summit\",\n            \"suite\": \"Suite 729\",\n            \"city\": \"Aliyaview\",\n            \"zipcode\": \"45169\",\n            \"geo\": {\n                \"lat\": \"-14.3990\",\n                \"lng\": \"-120.7677\"\n            }\n        },\n        \"phone\": \"586.493.6943 x140\",\n        \"website\": \"jacynthe.com\",\n        \"company\": {\n            \"name\": \"Abernathy Group\",\n            \"catchPhrase\": \"Implemented secondary concept\",\n            \"bs\": \"e-enable extensible e-tailers\"\n        }\n    },\n    {\n        \"id\": 9,\n        \"name\": \"Glenna Reichert\",\n        \"username\": \"Delphine\",\n        \"email\": \"Chaim_McDermott@dana.io\",\n        \"address\": {\n            \"street\": \"Dayna Park\",\n            \"suite\": \"Suite 449\",\n            \"city\": \"Bartholomebury\",\n            \"zipcode\": \"76495-3109\",\n            \"geo\": {\n                \"lat\": \"24.6463\",\n                \"lng\": \"-168.8889\"\n            }\n        },\n        \"phone\": \"(775)976-6794 x41206\",\n        \"website\": \"conrad.com\",\n        \"company\": {\n            \"name\": \"Yost and Sons\",\n            \"catchPhrase\": \"Switchable contextually-based project\",\n            \"bs\": \"aggregate real-time technologies\"\n        }\n    },\n    {\n        \"id\": 10,\n        \"name\": \"Clementina DuBuque\",\n        \"username\": \"Moriah.Stanton\",\n        \"email\": \"Rey.Padberg@karina.biz\",\n        \"address\": {\n            \"street\": \"Kattie Turnpike\",\n            \"suite\": \"Suite 198\",\n            \"city\": \"Lebsackbury\",\n            \"zipcode\": \"31428-2261\",\n            \"geo\": {\n                \"lat\": \"-38.2386\",\n                \"lng\": \"57.2232\"\n            }\n        },\n        \"phone\": \"024-648-3804\",\n        \"website\": \"ambrose.net\",\n        \"company\": {\n            \"name\": \"Hoeger LLC\",\n            \"catchPhrase\": \"Centralized empowering task-force\",\n            \"bs\": \"target end-to-end models\"\n        }\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Create Post (POST)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"pm.environment.set(\"postId\", response.id > 100 ? 1 : response.id);",
+							"",
+							"pm.test(\"Response has correct fields\", function () {",
+							"    pm.expect(response).to.have.property('title');",
+							"    pm.expect(response).to.have.property('body');",
+							"    pm.expect(response).to.have.property('userId');",
+							"});",
+							"pm.test(\"Response schema is valid\", function () {",
+							"    const schema = {",
+							"        type: 'object',",
+							"        required: ['title', 'body', 'userId', 'id'],",
+							"        properties: {",
+							"            title: { type: 'string' },",
+							"            body: { type: 'string' },",
+							"            userId: { type: ['integer', 'string'] },",
+							"            id: { type: ['integer', 'string'] }",
+							"        }",
+							"    };",
+							"    pm.response.to.have.jsonSchema(schema);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"{{title}}\",\n  \"body\": \"{{body}}\",\n  \"userId\": \"{{userID}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/posts",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"posts"
+					]
+				},
+				"description": "## Purpose\n\nCreates a new post and stores its ID for use in subsequent requests (data chaining).\n\n## Method\n\nPOST {{baseUrl}}/posts\n\n## Headers\n\n- Authorization: Bearer {{token}}\n    \n- Content-Type: application/json\n    \n\n## Request Body\n\n{  \n\"title\": \"{{title}}\",  \n\"body\": \"{{body}}\",  \n\"userId\": {{userId}}  \n}\n\n## Expected Response\n\nStatus: 201 Created  \nBody example:  \n{  \n\"title\": \"Sample Post\",  \n\"body\": \"This is a test post\",  \n\"userId\": 1,  \n\"id\": 101  \n}\n\n## Tests Performed\n\n- ✅ Status code = 201\n    \n- ✅ Required fields: title, body, userId\n    \n- ✅ JSON schema validation (flexible types)\n    \n- ✅ Saves `postId` dynamically to environment\n    \n\n## Notes\n\n- JSONPlaceholder always returns `id = 101`.  \n    Test script auto-fixes it to `1` for chaining:  \n    `pm.environment.set(\"postId\", response.id > 100 ? 1 : response.id);`"
+			},
+			"response": [
+				{
+					"name": "Create Post (POST)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Test\",\n  \"body\": \"Test body\",\n  \"userId\": \"2\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/posts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 10 Nov 2025 11:17:56 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "74"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "access-control-expose-headers",
+							"value": "Location"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"4a-rOvappf7rJzIFnfd5PtAVMkcppY\""
+						},
+						{
+							"key": "expires",
+							"value": "-1"
+						},
+						{
+							"key": "location",
+							"value": "https://jsonplaceholder.typicode.com/posts/101"
+						},
+						{
+							"key": "nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+						},
+						{
+							"key": "pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "report-to",
+							"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=p%2FikI1oX9RAMinm527XuK3tsFyaE8WtjiuZVwt2ngag%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1762773475\"}],\"max_age\":3600}"
+						},
+						{
+							"key": "reporting-endpoints",
+							"value": "heroku-nel=\"https://nel.heroku.com/reports?s=p%2FikI1oX9RAMinm527XuK3tsFyaE8WtjiuZVwt2ngag%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1762773475\""
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "vary",
+							"value": "Origin, X-HTTP-Method-Override, Accept-Encoding"
+						},
+						{
+							"key": "via",
+							"value": "2.0 heroku-router"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "x-ratelimit-limit",
+							"value": "1000"
+						},
+						{
+							"key": "x-ratelimit-remaining",
+							"value": "999"
+						},
+						{
+							"key": "x-ratelimit-reset",
+							"value": "1762773512"
+						},
+						{
+							"key": "cf-cache-status",
+							"value": "DYNAMIC"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "99c5256fca18fe13-SIN"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\"; ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"title\": \"Test\",\n    \"body\": \"Test body\",\n    \"userId\": \"2\",\n    \"id\": 101\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Post (GET)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Content-Type is JSON\", function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"});",
+							"",
+							"pm.test(\"Response schema is valid\", function () {",
+							"    const schema = {",
+							"        type: 'object',",
+							"        required: ['userId', 'id', 'title', 'body'],",
+							"        properties: {",
+							"            userId: { type: 'integer' },",
+							"            id: { type: 'integer' },",
+							"            title: { type: 'string' },",
+							"            body: { type: 'string' }",
+							"        }",
+							"    };",
+							"    pm.response.to.have.jsonSchema(schema);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/posts/{{postId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}"
+					]
+				},
+				"description": "## Purpose\n\nRetrieves details of the created post using the dynamic postId saved in the environment.\n\n## Method\n\nGET {{baseUrl}}/posts/{{postId}}\n\n## Headers\n\n- Authorization: Bearer {{token}}\n    \n\n## Expected Response\n\nStatus: 200 OK  \nBody example:  \n{  \n\"userId\": 1,  \n\"id\": 1,  \n\"title\": \"Sample title\",  \n\"body\": \"Sample content\"  \n}\n\n## Tests Performed\n\n- ✅ Status code = 200\n    \n- ✅ Content-Type is JSON\n    \n- ✅ Schema validation (checks title, body, id, userId)\n    \n\n## Notes\n\n- Works after Create Post (uses the saved `postId`).\n    \n- Returns 404 if `postId = 101` (handled via auto-fix in POST test)."
+			},
+			"response": [
+				{
+					"name": "Get Post (GET)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/posts/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								"{{postId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 10 Nov 2025 11:18:53 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "public, max-age=43200"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"124-yiKdLzqO5gfBrJFrcdJ8Yq0LGnU\""
+						},
+						{
+							"key": "expires",
+							"value": "Mon, 10 Nov 2025 23:18:53 GMT"
+						},
+						{
+							"key": "nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+						},
+						{
+							"key": "pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "report-to",
+							"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=JBcdxbjE8lwPa89Y8Ly%2BlNm%2B4ic2jmC3A0lzShGinHk%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1758187400\"}],\"max_age\":3600}"
+						},
+						{
+							"key": "reporting-endpoints",
+							"value": "heroku-nel=\"https://nel.heroku.com/reports?s=JBcdxbjE8lwPa89Y8Ly%2BlNm%2B4ic2jmC3A0lzShGinHk%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1758187400\""
+						},
+						{
+							"key": "vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "via",
+							"value": "2.0 heroku-router"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "x-ratelimit-limit",
+							"value": "1000"
+						},
+						{
+							"key": "x-ratelimit-remaining",
+							"value": "999"
+						},
+						{
+							"key": "x-ratelimit-reset",
+							"value": "1758187454"
+						},
+						{
+							"key": "Age",
+							"value": "1139"
+						},
+						{
+							"key": "cf-cache-status",
+							"value": "HIT"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "99c526d73e61fe13-SIN"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\"; ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"userId\": 1,\n    \"id\": 1,\n    \"title\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",\n    \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Post (PUT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"pm.test(\"Title was updated successfully\", function () {",
+							"    pm.expect(response.title).to.include('Updated');",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": {{postId}},\n  \"title\": \"Updated - {{title}}\",\n  \"body\": \"{{body}}\",\n  \"userId\": \"{{userId}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/posts/{{postId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}"
+					]
+				},
+				"description": "## Purpose\n\nUpdates an existing post using the stored postId.\n\n## Method\n\nPUT {{baseUrl}}/posts/{{postId}}\n\n## Headers\n\n- Authorization: Bearer {{token}}\n    \n- Content-Type: application/json\n    \n\n## Request Body\n\n{  \n\"id\": {{postId}},  \n\"title\": \"Updated - {{title}}\",  \n\"body\": \"{{body}}\",  \n\"userId\": {{userId}}  \n}\n\n## Expected Response\n\nStatus: 200 OK  \nBody example:  \n{  \n\"id\": 1,  \n\"title\": \"Updated - Sample Post\",  \n\"body\": \"This is a test post\",  \n\"userId\": 1  \n}\n\n## Tests Performed\n\n- ✅ Status code = 200\n    \n- ✅ Title contains \"Updated\"\n    \n\n## Notes\n\n- Dummy update (data not really changed on server).\n    \n- Helps verify PUT method and response structure."
+			},
+			"response": [
+				{
+					"name": "Update Post (PUT)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": {{postId}},\n  \"title\": \"Updated - title\",\n  \"body\": \"updated body\",\n  \"userId\": \"updated ID\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/posts/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								"{{postId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 10 Nov 2025 11:19:55 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"5f-l3Ek/6LRypR8F555K2VEumR1arA\""
+						},
+						{
+							"key": "expires",
+							"value": "-1"
+						},
+						{
+							"key": "nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+						},
+						{
+							"key": "pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "report-to",
+							"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=Qi0e175pvfX3D8j2kD7W6%2Fb1SAd6TDc6EUiFvGIvs2s%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1762773595\"}],\"max_age\":3600}"
+						},
+						{
+							"key": "reporting-endpoints",
+							"value": "heroku-nel=\"https://nel.heroku.com/reports?s=Qi0e175pvfX3D8j2kD7W6%2Fb1SAd6TDc6EUiFvGIvs2s%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1762773595\""
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "via",
+							"value": "2.0 heroku-router"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "x-ratelimit-limit",
+							"value": "1000"
+						},
+						{
+							"key": "x-ratelimit-remaining",
+							"value": "999"
+						},
+						{
+							"key": "x-ratelimit-reset",
+							"value": "1762773632"
+						},
+						{
+							"key": "cf-cache-status",
+							"value": "DYNAMIC"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "99c528569a20fe13-SIN"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\"; ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"title\": \"Updated - title\",\n    \"body\": \"updated body\",\n    \"userId\": \"updated ID\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Post (DELETE)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Response body is empty\", function () {",
+							"    pm.expect(pm.response.text()).to.eql('{}');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/posts/{{postId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}"
+					]
+				},
+				"description": "## Purpose\n\nDeletes the created post (simulated).  \nConfirms that the DELETE endpoint responds correctly.\n\n## Method\n\nDELETE {{baseUrl}}/posts/{{postId}}\n\n## Headers\n\n- Authorization: Bearer {{token}}\n    \n\n## Expected Response\n\nStatus: 200 OK  \nBody example:  \n{}\n\n## Tests Performed\n\n- ✅ Status code = 200\n    \n- ✅ Response body is empty (`{}`)\n    \n\n## Notes\n\n- JSONPlaceholder doesn’t truly delete records.\n    \n- Request demonstrates DELETE operation flow."
+			},
+			"response": [
+				{
+					"name": "Delete Post (DELETE)",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/posts/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								"{{postId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 10 Nov 2025 11:20:39 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+						},
+						{
+							"key": "expires",
+							"value": "-1"
+						},
+						{
+							"key": "nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+						},
+						{
+							"key": "pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "report-to",
+							"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=JFvUGAwCOQMVd5rWYu%2FOpGp%2Fa8qW7VyrYdkLdfxiQbc%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1762773639\"}],\"max_age\":3600}"
+						},
+						{
+							"key": "reporting-endpoints",
+							"value": "heroku-nel=\"https://nel.heroku.com/reports?s=JFvUGAwCOQMVd5rWYu%2FOpGp%2Fa8qW7VyrYdkLdfxiQbc%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1762773639\""
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "via",
+							"value": "2.0 heroku-router"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "x-ratelimit-limit",
+							"value": "1000"
+						},
+						{
+							"key": "x-ratelimit-remaining",
+							"value": "999"
+						},
+						{
+							"key": "x-ratelimit-reset",
+							"value": "1762773692"
+						},
+						{
+							"key": "cf-cache-status",
+							"value": "DYNAMIC"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "99c5296dce26fe13-SIN"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\"; ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "{}"
+				}
+			]
+		}
+	]
+}
