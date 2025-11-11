@@ -1,23 +1,70 @@
-name: Run Newman Tests
+# ----------------------------------------------
+# 🚀 GitHub Actions Workflow for API Automation
+# ----------------------------------------------
+# This workflow will:
+# 1. Run API tests automatically on Pull Request (before merge)
+# 2. Run API tests again on Push to main (after merge)
+# 3. Generate HTML Extra report for test results
+# ----------------------------------------------
+
+name: API Test Workflow  # Name shown in GitHub Actions tab
+
 on:
-  push:
-    branches: [ main ]
+  # 🧩 Trigger 1: Run workflow when a Pull Request is opened or updated targeting 'main'
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+
+  # 🧩 Trigger 2: Run workflow when code is pushed directly or via merge into 'main'
+  push:
+    branches:
+      - main
+
 jobs:
-  run-api-tests:
-    runs-on: ubuntu-latest
+  api-tests:
+    # 💻 Runner: Temporary environment where workflow runs
+    runs-on: ubuntu-latest  # using Linux (faster, simpler than Windows)
+
     steps:
+      # ----------------------------------------------
+      # 🧩 Step 1: Checkout code from GitHub repo
+      # ----------------------------------------------
       - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/checkout@v3
+
+      # ----------------------------------------------
+      # 🧩 Step 2: Set up Node.js (required for Newman)
+      # ----------------------------------------------
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
-      - name: Install Newman
-        run: npm install -g newman
-      - name: Run Postman collection with Newman
+          node-version: '18'  # You can change if your project uses a different version
+
+      # ----------------------------------------------
+      # 🧩 Step 3: Install Newman and Newman HTML Extra reporter
+      # ----------------------------------------------
+      - name: Install dependencies
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      # ----------------------------------------------
+      # 🧩 Step 4: Run Postman Collection using Newman
+      # Replace 'collection.json' and 'environment.json' with your actual file names
+      # ----------------------------------------------
+      - name: Run API Tests
         run: |
           newman run "API_Automation_Project.postman_collection.json" \
-            -e "API_Automation_Project.postman_environment.json" \
-            --reporters cli
+          -e "API_Automation_Project.postman_environment.json" \
+          -r htmlextra \
+          --reporter-htmlextra-export reports/newman-report.html
+
+      # ----------------------------------------------
+      # 🧩 Step 5: Upload the HTML Extra report as a build artifact
+      # This allows you to view/download the report from GitHub Actions UI
+      # ----------------------------------------------
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: API-Test-Report
+          path: reports/newman-report.html  # path where report is stored
