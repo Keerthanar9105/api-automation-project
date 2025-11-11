@@ -10,15 +10,23 @@
 name: API Test Workflow  # Name shown in GitHub Actions tab
 
 on:
-  # 🧩 Trigger 1: Run workflow when a Pull Request is opened or updated targeting 'main'
+ # 1️⃣ Push Trigger → Runs automatically whenever new code is pushed to main branch
+  push:
+    branches:
+      - main
+
+  # 2️⃣ Pull Request Trigger → Runs when a PR is opened/updated targeting main
   pull_request:
     branches:
       - main
 
-  # 🧩 Trigger 2: Run workflow when code is pushed directly or via merge into 'main'
-  push:
-    branches:
-      - main
+  # 3️⃣ Manual Trigger → Adds a "Run workflow" button in Actions tab
+  workflow_dispatch:
+
+  # 4️⃣ Scheduled Trigger → Runs automatically at a specific time using cron syntax
+  schedule:
+    # Below example means: every day at 2 AM UTC
+    - cron: "0 2 * * *"
 
 jobs:
   api-tests:
