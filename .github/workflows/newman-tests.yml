@@ -56,6 +56,7 @@ jobs:
         run: |
           newman run "API_Automation_Project.postman_collection.json" \
           -e "API_Automation_Project.postman_environment.json" \
+          -d data/testdata.csv \
           -r htmlextra \
           --reporter-htmlextra-export reports/newman-report.html
 
