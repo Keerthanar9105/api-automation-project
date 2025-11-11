@@ -92,7 +92,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}  # Auto token provided by GitHub
           publish_dir: reports                      # Folder containing the HTML report
           destination_dir: reports                  # Where it will appear in gh-pages branch
-
-      # 🧩 Step 7: Add a clickable link to the published report in GitHub Actions summary
-      - name: Add report link to workflow summary
-        run: echo '📄 API Test Report: [Vi]()
