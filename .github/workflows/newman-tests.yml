@@ -66,7 +66,7 @@ jobs:
           -e "API_Automation_Project.postman_environment.json" \
           -d data/testdata.csv \
           -r htmlextra \
-          --reporter-htmlextra-export reports/newman-report.html
+          --reporter-htmlextra-export reports/index.html
 
       # ----------------------------------------------
       # 🧩 Step 5: Upload the HTML Extra report as a build artifact
@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: API-Test-Report
-          path: reports/newman-report.html  # path where report is stored
+          path: reports/index.html  # path where report is stored
       # ----------------------------------------------
       # 🧩 Step 6: Deploy report to GitHub Pages
       # Publishes the HTML report to a 'gh-pages' branch
@@ -90,3 +90,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}  # Auto token provided by GitHub
           publish_dir: reports                      # Folder containing the HTML report
           destination_dir: reports                  # Where it will appear in gh-pages branch
+       # 🧩 Step 7: Add a clickable link to the published report in GitHub Actions summary
+- name: Add report link to workflow summary
+  run: echo "📄 API Test Report: [View Report](https://Keerthanar9105.github.io/api-automation-project/reports/)" >> $GITHUB_STEP_SUMMARY
+
