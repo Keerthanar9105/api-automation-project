@@ -77,3 +77,16 @@ jobs:
         with:
           name: API-Test-Report
           path: reports/newman-report.html  # path where report is stored
+      # ----------------------------------------------
+      # 🧩 Step 6: Deploy report to GitHub Pages
+      # Publishes the HTML report to a 'gh-pages' branch
+      # so it’s accessible via a live public URL:
+      # https://keerthanar9105.github.io/api-automation-project/reports/newman-report.html
+      # ----------------------------------------------
+      - name: Deploy report to GitHub Pages
+        if: success()  # Runs only if tests passed
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Auto token provided by GitHub
+          publish_dir: reports                      # Folder containing the HTML report
+          destination_dir: reports                  # Where it will appear in gh-pages branch
