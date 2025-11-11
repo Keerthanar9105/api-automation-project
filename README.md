@@ -1,12 +1,13 @@
 # 🧩 API Automation Project
 
-![API Tests](https://github.com/Keerthanar9105/api-automation-project/actions/workflows/newman-tests.yml/badge.svg)
+[![API Tests](https://github.com/Keerthanar9105/api-automation-project/actions/workflows/newman-tests.yml/badge.svg)](https://github.com/Keerthanar9105/api-automation-project/actions/workflows/newman-tests.yml)
 
 **View the latest API test report:**  
 [📄 Click here to see the report](https://Keerthanar9105.github.io/api-automation-project/reports/)
 
 This repository contains a Postman collection and environment for **API automation testing** using [JSONPlaceholder](https://jsonplaceholder.typicode.com/).  
 The tests are executed automatically through **GitHub Actions** using **Newman**, and generate an HTML report.
+
 
 ---
 
