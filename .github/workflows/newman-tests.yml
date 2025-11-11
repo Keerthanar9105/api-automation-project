@@ -62,6 +62,7 @@ jobs:
       # ----------------------------------------------
       - name: Run API Tests
         run: |
+          mkdir -p reports
           newman run "API_Automation_Project.postman_collection.json" \
           -e "API_Automation_Project.postman_environment.json" \
           -d data/testdata.csv \
@@ -82,7 +83,7 @@ jobs:
       # 🧩 Step 6: Deploy report to GitHub Pages
       # Publishes the HTML report to a 'gh-pages' branch
       # so it’s accessible via a live public URL:
-      # https://keerthanar9105.github.io/api-automation-project/reports/newman-report.html
+      # https://keerthanar9105.github.io/api-automation-project/reports/index.html
       # ----------------------------------------------
       - name: Deploy report to GitHub Pages
         if: success()  # Runs only if tests passed
@@ -92,6 +93,6 @@ jobs:
           publish_dir: reports                      # Folder containing the HTML report
           destination_dir: reports                  # Where it will appear in gh-pages branch
 
-            # 🧩 Step 7: Add a clickable link to the published report in GitHub Actions summary
+      # 🧩 Step 7: Add a clickable link to the published report in GitHub Actions summary
       - name: Add report link to workflow summary
-        run: echo '📄 API Test Report: [View Report](https://Keerthanar9105.github.io/api-automation-project/reports/)' >> $GITHUB_STEP_SUMMARY
+        run: echo '📄 API Test Report: [Vi]()
