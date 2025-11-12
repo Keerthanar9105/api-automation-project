@@ -5,12 +5,13 @@
 # 1. Run API tests automatically on Pull Request (before merge)
 # 2. Run API tests again on Push to main (after merge)
 # 3. Generate HTML Extra report for test results
+# 4. Send an email notification after every run
 # ----------------------------------------------
 
 name: API Test Workflow  # Name shown in GitHub Actions tab
 
 on:
- # 1️⃣ Push Trigger → Runs automatically whenever new code is pushed to main branch
+  # 1️⃣ Push Trigger → Runs automatically whenever new code is pushed to main branch
   push:
     branches:
       - main
@@ -71,7 +72,6 @@ jobs:
 
       # ----------------------------------------------
       # 🧩 Step 5: Upload the HTML Extra report as a build artifact
-      # This allows you to view/download the report from GitHub Actions UI
       # ----------------------------------------------
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
@@ -81,14 +81,49 @@ jobs:
 
       # ----------------------------------------------
       # 🧩 Step 6: Deploy report to GitHub Pages
-      # Publishes the HTML report to a 'gh-pages' branch
-      # so it’s accessible via a live public URL:
-      # https://keerthanar9105.github.io/api-automation-project/reports/index.html
       # ----------------------------------------------
       - name: Deploy report to GitHub Pages
         if: success()  # Runs only if tests passed
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Auto token provided by GitHub
-          publish_dir: reports                      # Folder containing the HTML report
-          destination_dir: reports                  # Where it will appear in gh-pages branch
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: reports
+          destination_dir: reports
+
+      # ---------------------------------------------
+      # 🕒 STEP 7: Set Timestamp for Email
+      # ---------------------------------------------
+      - name: Set Timestamp
+        run: echo "RUN_DATE=$(date '+%d %b %Y, %I:%M %p IST')" >> $GITHUB_ENV
+
+      # ---------------------------------------------
+      # 📧 STEP 8: Email Notification
+      # ---------------------------------------------
+      - name: Send Email Notification
+        if: always()  # ensures it runs for both success and failure
+        uses: dawidd6/action-send-mail@v3
+        with:
+          # ✅ SMTP settings (for Gmail)
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USER }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+
+          # ✉️ Email header details
+          subject: "GitHub Actions - API Test Workflow (${{ job.status == 'success' && 'SUCCESS' || 'FAILURE' }}) - ${{ env.RUN_DATE }}"
+          to: "keerthanar9105@gmail.com"
+          from: "GitHub Actions <${{ secrets.EMAIL_USER }}>"
+
+          # 📝 Email message body
+          body: |
+            Hello Team,
+
+            The GitHub Actions workflow **API Test Workflow** has completed.
+
+            ${{ job.status == 'success' && '🟢 Status: SUCCESS' || '🔴 Status: FAILURE' }}
+            🌿 Branch: ${{ github.ref_name }}
+            👤 Triggered by: ${{ github.actor }}
+            🕒 Run started at: ${{ env.RUN_DATE }}
+
+            Regards,
+            GitHub Actions Bot
