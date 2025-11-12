@@ -93,8 +93,8 @@ jobs:
       # ---------------------------------------------
       # 🕒 STEP 7: Set Timestamp for Email
       # ---------------------------------------------
-      - name: Set Timestamp
-        run: echo "RUN_DATE=$(date '+%d %b %Y, %I:%M %p IST')" >> $GITHUB_ENV
+      - name: Set Timestamp (IST)
+        run: echo "RUN_DATE=$(TZ='Asia/Kolkata' date '+%d %b %Y, %I:%M %p IST')" >> $GITHUB_ENV
 
       # ---------------------------------------------
       # 📧 STEP 8: Email Notification
@@ -125,5 +125,7 @@ jobs:
             👤 Triggered by: ${{ github.actor }}
             🕒 Run started at: ${{ env.RUN_DATE }}
 
+                        📊 View detailed HTML report here:
+            🔗 https://keerthanar9105.github.io/api-automation-project/reports/index.html
             Regards,
             GitHub Actions Bot
